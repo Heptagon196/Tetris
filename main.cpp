@@ -105,8 +105,8 @@ int main() {
     hidecursor();
 #if defined(linux) || defined(__APPLE__)
 #else
-    system("mode con lines=30");
-    system("mode con cols=30");
+    system("mode con lines=22");
+    system("mode con cols=38");
 #endif
     for (int i = 0; i < Map.size(); i ++) {
         Map[i][1] = Map[i][Map[0].size() - 2] = 1;
@@ -158,7 +158,7 @@ int main() {
         }
         cnt ++;
         cnt %= 3;
-        if (cnt && ch != '\n') {
+        if (cnt && ch != '\n' && ch != '\r') {
             continue;
         }
         LOOP:;
@@ -180,7 +180,7 @@ int main() {
                 puts("Game over!");
                 break;
             }
-        } else if (ch == '\n') {
+        } else if (ch == '\n' || ch == '\r') {
             goto LOOP;
         }
     }
