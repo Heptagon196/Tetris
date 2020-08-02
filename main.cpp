@@ -2,6 +2,10 @@
 #include <chrono>
 #include <thread>
 #include "Block.h"
+#if defined(linux) || defined(__APPLE__)
+#else
+#include <windows.h>
+#endif
 using namespace std;
 
 vector<Block> blocks = {
@@ -99,6 +103,14 @@ void PrintMap() {
 
 Block* NewBlock() {
     return &blocks[rand() % blocks.size()];
+}
+
+void milli_sleep(int m) {
+#if defined(linux) || defined(__APPLE__)
+    this_thread::sleep_for(chrono::milliseconds(20));
+#else
+    Sleep(m);
+#endif
 }
 
 char readkey(double lasting_time) {
