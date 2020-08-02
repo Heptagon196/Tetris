@@ -1,5 +1,6 @@
-#include <cstdio>
 #include <iostream>
+#include <chrono>
+#include <thread>
 #include "Block.h"
 using namespace std;
 
@@ -81,15 +82,15 @@ void ClearMap() {
 void PrintMap() {
     for (int i = 1; i < Map.size() - 1; i ++) {
         for (int j = 1; j < Map[0].size() - 1; j ++) {
-            gotoxy(j, i);
+            move_cursor(j, i);
             if (Map[i][j]) {
                 if (i == 1 || j == 1 || i == Map.size() - 2 || j == Map[0].size() - 2) {
-                    color(WHITE, GREEN);
+                    set_color(WHITE, GREEN);
                 } else {
-                    color(WHITE, RED);
+                    set_color(WHITE, RED);
                 }
             } else {
-                color(WHITE, WHITE);
+                set_color(WHITE, WHITE);
             }
             printf("  ");
         }
@@ -100,9 +101,27 @@ Block* NewBlock() {
     return &blocks[rand() % blocks.size()];
 }
 
+char readkey(double lasting_time) {
+    double last_time_point = get_time();
+    char last_ch = 0;
+    while (kbhit()) {
+        last_ch = getch();
+    }
+    while (!kbhit() && (get_time() - last_time_point < lasting_time)) {
+        this_thread::sleep_for(chrono::milliseconds(20));
+    }
+    if (!kbhit()) {
+        return last_ch;
+    }
+    while (get_time() - last_time_point < lasting_time) {
+        this_thread::sleep_for(chrono::milliseconds(20));
+    }
+    return getch();
+}
+
 int main() {
     srand(time(NULL));
-    hidecursor();
+    hide_cursor();
 #if defined(linux) || defined(__APPLE__)
 #else
     system("mode con lines=22");
@@ -117,24 +136,24 @@ int main() {
     int L = Map[0].size() - 2;
     for (int i = 1; i < Map.size() - 1; i ++) {
         for (int j = L; j <= L + 7; j ++) {
-            gotoxy(j, i);
+            move_cursor(j, i);
             if (i == 1 || i == Map.size() - 2 || j == Map[0].size() + 5) {
-                color(WHITE, GREEN);
+                set_color(WHITE, GREEN);
             } else {
-                color(WHITE, WHITE);
+                set_color(WHITE, WHITE);
             }
             printf("  ");
         }
     }
     PrintMap();
-    gotoxy(L + 3, Map.size() / 2 - 8);
-    color(BLACK, WHITE);
+    move_cursor(L + 3, Map.size() / 2 - 8);
+    set_color(BLACK, WHITE);
     puts("Next");
-    gotoxy(L + 2, Map.size() / 2 - 1);
-    color(BLACK, WHITE);
+    move_cursor(L + 2, Map.size() / 2 - 1);
+    set_color(BLACK, WHITE);
     puts(" Points");
-    gotoxy(L + 3, Map.size() / 2 + 1);
-    color(BLACK, WHITE);
+    move_cursor(L + 3, Map.size() / 2 + 1);
+    set_color(BLACK, WHITE);
     printf(" %d  ", score);
     Block* block = NewBlock();
     Block* next_block = NewBlock();
@@ -167,8 +186,8 @@ int main() {
             block->Reset();
             ClearMap();
             PrintMap();
-            gotoxy(L + 3, Map.size() / 2 + 1);
-            color(BLACK, WHITE);
+            move_cursor(L + 3, Map.size() / 2 + 1);
+            set_color(BLACK, WHITE);
             printf(" %d  ", score);
             block = next_block;
             next_block = NewBlock();
@@ -176,7 +195,7 @@ int main() {
             block->LinkToMap(Map);
             block->ShowBlock();
             if (block->CheckCollision()) {
-                color(BLACK, WHITE);
+                set_color(BLACK, WHITE);
                 puts("Game over!");
                 break;
             }
@@ -184,7 +203,7 @@ int main() {
             goto LOOP;
         }
     }
-    gotoxy(1, Map.size());
-    showcursor();
+    move_cursor(1, Map.size());
+    show_cursor();
     return 0;
 }

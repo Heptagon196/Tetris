@@ -2,7 +2,7 @@
 #define HEPTAGON196_TETRIS_BLOCK_H
 #include <vector>
 #include <memory>
-#include "ConioPlus.h"
+#include "ConsoleIO.h"
 typedef int BlockMap[4][4];
 typedef std::vector<std::vector<int> > GameMap;
 class Block {

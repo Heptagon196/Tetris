@@ -1,7 +1,7 @@
 .SILENT:
 FLAG = --std=c++11 -Dlinux
 CPP = g++
-DEPENDENCIES = ./Block.o ./main.o ./ConioPlus.o
+DEPENDENCIES = ./Block.o ./main.o ./ConsoleIO.o
 ifdef MAKE_RELEASE
 	FLAG += -O2
 endif
@@ -25,13 +25,13 @@ tetris: $(DEPENDENCIES)
 ./main.o: ./main.cpp
 	echo "[2/4] Compiling ./main.cpp"
 	$(CPP) -c $(FLAG) $< -o ./main.o
-./ConioPlus.o: ./ConioPlus.cpp
-	echo "[3/4] Compiling ./ConioPlus.cpp"
-	$(CPP) -c $(FLAG) $< -o ./ConioPlus.o
+./ConsoleIO.o: ./ConsoleIO.cpp
+	echo "[3/4] Compiling ./ConsoleIO.cpp"
+	$(CPP) -c $(FLAG) $< -o ./ConsoleIO.o
 
 clean:
 	echo "Cleaning files"
-	rm -rf ./Block.o ./main.o ./ConioPlus.o
+	rm -rf ./Block.o ./main.o ./ConsoleIO.o
 install:
 	echo "Installing tetris to /usr/local/bin"
 	cp ./tetris /usr/local/bin/

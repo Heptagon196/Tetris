@@ -34,7 +34,7 @@ bool Block::CheckCollision() {
     for (int i = 0; i < 4; i ++) {
         for (int j = 0; j < 4; j ++) {
             if (x + i >= 0 && y + j >= 0 && x + i < Map->size() && y + j < (*Map)[0].size() && element[i][j] && (*Map)[i + x][j + y]) {
-                color(BLACK, WHITE);
+                set_color(BLACK, WHITE);
                 return true;
             }
         }
@@ -46,8 +46,8 @@ void Block::HideBlock() {
     for (int i = 0; i < 4; i ++) {
         for (int j = 0; j < 4; j ++) {
             if (element[i][j]) {
-                gotoxy(j + y, i + x);
-                color(WHITE, WHITE);
+                move_cursor(j + y, i + x);
+                set_color(WHITE, WHITE);
                 printf("  ");
             }
         }
@@ -58,8 +58,8 @@ void Block::ShowBlock() {
     for (int i = 0; i < 4; i ++) {
         for (int j = 0; j < 4; j ++) {
             if (element[i][j]) {
-                gotoxy(j + y, i + x);
-                color(WHITE, RED);
+                move_cursor(j + y, i + x);
+                set_color(WHITE, RED);
                 printf("  ");
             }
         }
@@ -69,11 +69,11 @@ void Block::ShowBlock() {
 void Block::PrintBlock(int y, int x) {
     for (int i = 0; i < 4; i ++) {
         for (int j = 0; j < 4; j ++) {
-            gotoxy(j + y, i + x);
+            move_cursor(j + y, i + x);
             if (element[i][j]) {
-                color(WHITE, RED);
+                set_color(WHITE, RED);
             } else {
-                color(WHITE, WHITE);
+                set_color(WHITE, WHITE);
             }
             printf("  ");
         }
