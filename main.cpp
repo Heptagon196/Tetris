@@ -107,7 +107,7 @@ Block* NewBlock() {
 
 void milli_sleep(int m) {
 #if defined(linux) || defined(__APPLE__)
-    this_thread::sleep_for(chrono::milliseconds(20));
+    this_thread::sleep_for(chrono::milliseconds(m));
 #else
     Sleep(m);
 #endif
@@ -120,13 +120,13 @@ char readkey(double lasting_time) {
         last_ch = getch();
     }
     while (!kbhit() && (get_time() - last_time_point < lasting_time)) {
-        this_thread::sleep_for(chrono::milliseconds(20));
+        milli_sleep(20);
     }
     if (!kbhit()) {
         return last_ch;
     }
     while (get_time() - last_time_point < lasting_time) {
-        this_thread::sleep_for(chrono::milliseconds(20));
+        milli_sleep(20);
     }
     return getch();
 }
