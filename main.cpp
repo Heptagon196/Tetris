@@ -114,19 +114,23 @@ void milli_sleep(int m) {
 }
 
 char readkey(double lasting_time) {
-    double last_time_point = get_time();
+    move_cursor(2, 2);
+    set_color(WHITE, WHITE);
+    int cnt = lasting_time * 50;
     char last_ch = 0;
     while (kbhit()) {
         last_ch = getch();
     }
-    while (!kbhit() && (get_time() - last_time_point < lasting_time)) {
+    while (!kbhit() && cnt > 0) {
         milli_sleep(20);
+        cnt--;
     }
     if (!kbhit()) {
         return last_ch;
     }
-    while (get_time() - last_time_point < lasting_time) {
+    while (cnt > 0) {
         milli_sleep(20);
+        cnt--;
     }
     return getch();
 }
