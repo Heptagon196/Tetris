@@ -1,8 +1,16 @@
 #include "Block.h"
 
+void GetRandomBlockColor(int& c) {
+    c = WHITE;
+    while (c == WHITE || c == BLACK || c == GREEN) {
+        c = get_random_color();
+    }
+}
+
 Block::Block() {
     x = 0;
     y = 4;
+    GetRandomBlockColor(color);
 }
 
 Block::Block(BlockMap e, int width) : width(width) {
@@ -14,6 +22,7 @@ Block::Block(BlockMap e, int width) : width(width) {
             backup[i][j] = e[i][j];
         }
     }
+    GetRandomBlockColor(color);
 }
 
 void Block::Reset() {
@@ -33,7 +42,7 @@ void Block::LinkToMap(GameMap& l) {
 bool Block::CheckCollision() {
     for (int i = 0; i < 4; i ++) {
         for (int j = 0; j < 4; j ++) {
-            if (x + i >= 0 && y + j >= 0 && x + i < Map->size() && y + j < (*Map)[0].size() && element[i][j] && (*Map)[i + x][j + y]) {
+            if (x + i >= 0 && y + j >= 0 && x + i < Map->size() && y + j < (*Map)[0].size() && element[i][j] && (*Map)[i + x][j + y].first) {
                 set_color(BLACK, WHITE);
                 return true;
             }
@@ -59,7 +68,7 @@ void Block::ShowBlock() {
         for (int j = 0; j < 4; j ++) {
             if (element[i][j]) {
                 move_cursor(j + y, i + x);
-                set_color(WHITE, RED);
+                set_color(WHITE, color);
                 printf("  ");
             }
         }
@@ -71,7 +80,7 @@ void Block::PrintBlock(int y, int x) {
         for (int j = 0; j < 4; j ++) {
             move_cursor(j + y, i + x);
             if (element[i][j]) {
-                set_color(WHITE, RED);
+                set_color(WHITE, color);
             } else {
                 set_color(WHITE, WHITE);
             }
@@ -128,7 +137,8 @@ void Block::SetDown() {
     for (int i = 0; i < 4; i ++) {
         for (int j = 0; j < 4; j ++) {
             if (element[i][j]) {
-                (*Map)[i + x][j + y] = 1;
+                (*Map)[i + x][j + y].first = 1;
+                (*Map)[i + x][j + y].second = color;
             }
         }
     }

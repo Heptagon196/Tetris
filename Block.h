@@ -4,7 +4,7 @@
 #include <memory>
 #include "ConsoleIO.h"
 typedef int BlockMap[4][4];
-typedef std::vector<std::vector<int> > GameMap;
+typedef std::vector<std::vector<std::pair<int, int> > > GameMap;
 class Block {
     private:
         BlockMap element;
@@ -12,6 +12,7 @@ class Block {
         GameMap* Map;
         int width;
         int x, y;
+        int color;
     public:
         Block(BlockMap e, int width);
         Block();

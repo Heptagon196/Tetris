@@ -53,7 +53,7 @@ vector<Block> blocks = {
     }, 3),
 };
 
-vector<vector<int> > Map(24, vector<int>(14, 0));
+vector<vector<pair<int, int> > > Map(24, vector<pair<int, int> >(14, {0, RED}));
 int score = 0;
 
 void ClearMap() {
@@ -63,7 +63,7 @@ void ClearMap() {
         clear = true;
         l = i;
         for (int j = 2; j < Map[0].size() - 2; j ++) {
-            if (!Map[i][j]) {
+            if (!Map[i][j].first) {
                 clear = false;
                 break;
             }
@@ -87,11 +87,11 @@ void PrintMap() {
     for (int i = 1; i < Map.size() - 1; i ++) {
         for (int j = 1; j < Map[0].size() - 1; j ++) {
             move_cursor(j, i);
-            if (Map[i][j]) {
+            if (Map[i][j].first) {
                 if (i == 1 || j == 1 || i == Map.size() - 2 || j == Map[0].size() - 2) {
                     set_color(WHITE, GREEN);
                 } else {
-                    set_color(WHITE, RED);
+                    set_color(WHITE, Map[i][j].second);
                 }
             } else {
                 set_color(WHITE, WHITE);
@@ -144,10 +144,10 @@ int main() {
     system("mode con cols=38");
 #endif
     for (int i = 0; i < Map.size(); i ++) {
-        Map[i][1] = Map[i][Map[0].size() - 2] = 1;
+        Map[i][1].first = Map[i][Map[0].size() - 2].first = 1;
     }
     for (int j = 0; j < Map[0].size(); j ++) {
-        Map[1][j] = Map[Map.size() - 2][j] = 1;
+        Map[1][j].first = Map[Map.size() - 2][j].first = 1;
     }
     int L = Map[0].size() - 2;
     for (int i = 1; i < Map.size() - 1; i ++) {
