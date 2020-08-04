@@ -173,11 +173,12 @@ int main() {
     printf(" %d  ", score);
     Block* block = NewBlock();
     Block* next_block = NewBlock();
-    next_block->PrintBlock(L + 2, Map.size() / 2 - 7);
+    next_block->PrintBlock(L + 2, Map.size() / 2 - 7, next_block->color);
     block->LinkToMap(Map);
     block->ShowBlock();
     int ch;
     int cnt = 0;
+    int next_color = next_block->color;
     while ((ch = readkey(0.1)) != 'q') {
         if (ch == 'a') {
             block->HorizontalMove(-1);
@@ -206,8 +207,10 @@ int main() {
             set_color(BLACK, WHITE);
             printf(" %d  ", score);
             block = next_block;
+            block->color = next_color;
             next_block = NewBlock();
-            next_block->PrintBlock(L + 2, Map.size() / 2 - 7);
+            next_color = GetRandomBlockColor();
+            next_block->PrintBlock(L + 2, Map.size() / 2 - 7, next_color);
             block->LinkToMap(Map);
             block->ShowBlock();
             if (block->CheckCollision()) {

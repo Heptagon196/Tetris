@@ -5,6 +5,9 @@
 #include "ConsoleIO.h"
 typedef int BlockMap[4][4];
 typedef std::vector<std::vector<std::pair<int, int> > > GameMap;
+
+int GetRandomBlockColor();
+
 class Block {
     private:
         BlockMap element;
@@ -12,8 +15,8 @@ class Block {
         GameMap* Map;
         int width;
         int x, y;
-        int color;
     public:
+        int color;
         Block(BlockMap e, int width);
         Block();
         void Reset();
@@ -21,7 +24,7 @@ class Block {
         bool CheckCollision();
         void HideBlock();
         void ShowBlock();
-        void PrintBlock(int y, int x);
+        void PrintBlock(int y, int x, int c);
         bool VertivalMove(int d);
         void HorizontalMove(int d);
         void Rotate();

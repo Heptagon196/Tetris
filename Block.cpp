@@ -1,16 +1,17 @@
 #include "Block.h"
 
-void GetRandomBlockColor(int& c) {
-    c = WHITE;
+int GetRandomBlockColor() {
+    int c = WHITE;
     while (c == WHITE || c == BLACK || c == GREEN) {
         c = get_random_color();
     }
+    return c;
 }
 
 Block::Block() {
     x = 0;
     y = 4;
-    GetRandomBlockColor(color);
+    color = GetRandomBlockColor();
 }
 
 Block::Block(BlockMap e, int width) : width(width) {
@@ -22,7 +23,7 @@ Block::Block(BlockMap e, int width) : width(width) {
             backup[i][j] = e[i][j];
         }
     }
-    GetRandomBlockColor(color);
+    color = GetRandomBlockColor();
 }
 
 void Block::Reset() {
@@ -75,12 +76,12 @@ void Block::ShowBlock() {
     }
 }
 
-void Block::PrintBlock(int y, int x) {
+void Block::PrintBlock(int y, int x, int c) {
     for (int i = 0; i < 4; i ++) {
         for (int j = 0; j < 4; j ++) {
             move_cursor(j + y, i + x);
             if (element[i][j]) {
-                set_color(WHITE, color);
+                set_color(WHITE, c);
             } else {
                 set_color(WHITE, WHITE);
             }

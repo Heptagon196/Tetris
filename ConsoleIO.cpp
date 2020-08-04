@@ -71,7 +71,7 @@ void clear_color() {
 }
 
 int get_random_color() {
-    const int code[] = {30, 31, 32, 33, 34, 35, 36, 37, 90, 91, 92, 93, 94, 95, 96};
+    const int code[16] = {30, 31, 32, 33, 34, 35, 36, 37, 90, 91, 92, 93, 94, 95, 96, 97};
     return code[rand() % 16];
 }
 
@@ -114,7 +114,7 @@ void clear_screen() {
 }
 
 int get_random_color() {
-    const int code[] = {0, 4, 2, 6, 1, 5, 3, 7, 8, 12, 10, 14, 9, 13, 11, 15};
+    const int code[16] = {0, 4, 2, 6, 1, 5, 3, 7, 8, 12, 10, 14, 9, 13, 11, 15};
     return code[rand() % 16];
 }
 
